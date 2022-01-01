@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form, Container } from 'react-bootstrap';
 import { GoogleLogin } from 'react-google-login';
 import HorizontalLine from '../components/HorizontalLine';
+import axios from 'axios';
 
 const SignUpModal = ({ show, onHide }) => {
+	const [nickName, setNickName] = useState("")
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+	const data = {
+		nick_name: nickName,
+		email,
+		password,
+	}
+
+	const handleSignUp = () => {
+		axios.post("users", data)
+		.then(res => {
+				console.log(res)
+		})
+		.catch(err => {
+			console.log(err)
+		})
+	}
+
 	return (
 		<Modal
 			show={show}
@@ -19,28 +39,30 @@ const SignUpModal = ({ show, onHide }) => {
 				<Modal.Body>
 					<Form>
 						<Form.Group className="mb-3">
-							<Form.Label>First Name</Form.Label>
-							<Form.Control placeholder="Enter your first name" />
-						</Form.Group>
-
-						<Form.Group className="mb-3">
-							<Form.Label>Last Name</Form.Label>
-							<Form.Control placeholder="Enter your last name" />
-						</Form.Group>
-
-						<Form.Group className="mb-3">
 							<Form.Label>Nick Name</Form.Label>
-							<Form.Control placeholder="Enter your nick name" />
+							<Form.Control
+								placeholder="Enter your nick name"
+								value={nickName}
+								onChange={e => setNickName(e.target.value)}
+							/>
 						</Form.Group>
 
 						<Form.Group className="mb-3">
 							<Form.Label>Email address</Form.Label>
-							<Form.Control type="email" placeholder="Enter email" />
+							<Form.Control
+								type="email"
+								placeholder="Enter email"
+								onChange={e => setEmail(e.target.value)}
+							/>
 						</Form.Group>
 
 						<Form.Group className="mb-3">
 							<Form.Label>Password</Form.Label>
-							<Form.Control type="password" placeholder="Password" />
+							<Form.Control
+								type="password"
+								placeholder="Enter password"
+								onChange={e => setPassword(e.target.value)}
+							/>
 						</Form.Group>
 
 						<Form.Group className="mb-3">
@@ -49,7 +71,12 @@ const SignUpModal = ({ show, onHide }) => {
 						</Form.Group>
 					</Form>
 				</Modal.Body>
-				<Button col-12 variant="info" type="button" className="my-3 w-100">
+				<Button 
+					col-12 variant="info" 
+					type="button" 
+					className="my-3 col-12" 
+					onClick={handleSignUp}
+				>
 					Sign Up
 				</Button>
 
