@@ -1,0 +1,102 @@
+html {
+	scroll-snap-type: y mandatory;
+}
+
+.app {
+	height: 63vh;
+	/* height: 85vh; */
+	background-color: white;
+	display: grid;
+	place-items: center;
+	padding-top: 100px;
+}
+.app__mobile {
+	position: relative;
+	height: 550px;
+	border: solid 5px silver;
+	/* height: 800px; */
+	overflow: scroll;
+	width: 100%;
+	max-width: 300px;
+	scroll-snap-type: y mandatory;
+	border-radius: 20px;
+
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.app__mobile::-webkit-scrollbar {
+	display: none;
+}
+/* Hide Scrollbar for IE, Edge and Firefox  */
+.app__mobile {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* FireFox */
+}
+
+.app__mobile_form {
+	position: relative;
+	height: 730px;
+	border: solid 5px silver;
+	/* height: 800px; */
+	overflow: scroll;
+	width: 100%;
+	max-width: 400px;
+	scroll-snap-type: y mandatory;
+	border-radius: 20px;
+
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.app__mobile_form::-webkit-scrollbar {
+	display: none;
+}
+/* Hide Scrollbar for IE, Edge and Firefox  */
+.app__mobile_form {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* FireFox */
+}
+
+.bezel {
+	padding: 5px 5px 5px 5px;
+	
+} 
+
+.inner_bezel {
+	padding: 5px 5px 5px 5px;
+	border: solid 2px silver;
+	border-radius: 20px;
+}
+
+.login_button {
+	background-color: #033f06;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+}
+
+#header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #fff;
+	right: 0;
+}
+
+#top_nav {
+	align-items: center;
+	width: "90%" !important;
+	justify-content: center !important;
+}
+
+.alignRow {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}

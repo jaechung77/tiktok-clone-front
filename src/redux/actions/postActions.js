@@ -1,21 +1,22 @@
 import { ActionTypes } from "../constants/actionTypes"
+import request from '../../constants/Requests'
+import axios from 'axios';
 
-export const setPosts = (posts) => {
-    return{
-        type: ActionTypes.SET_POSTS,
-        payload: posts,
-    }
+export const fetchPosts = () => async (dispatch) => {
+        const res = await axios.get(request.fetchVideos)
+        dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
 }
 
-export const selectedPost = (post) => {
-    return{
-        type: ActionTypes.SELECTED_POST,
-        payload: post,
-    }
-}
+// export const incrementLikes = (index) => {
+//     return{
+//         type: ActionTypes.INCREMENT_LIKES,
+//         payload: index,
+//     }
+// }
 
-export const removeSelectedPost = () => {
-    return{
-        type: ActionTypes.REMOVE_SELECTED_POST,
-    }
-}
+// export const decrementLikes = (index) => {
+//     return{
+//         type: ActionTypes.DECREMENT_LIKES,
+//         payload: index,
+//     }
+// }

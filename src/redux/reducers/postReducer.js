@@ -2,23 +2,29 @@ import { ActionTypes } from '../constants/actionTypes'
 
 const initialState = {
     posts: [],
+    // const [ likes, setLikes] = useState(useSelector((state) => state.allPosts.posts[index].likes))
+                                                                // state.allPosts.posts[index].likes
 }
 export const postReducer = ( state= initialState, { type, payload }) => {
     switch (type){
-        case ActionTypes.SET_POSTS:
-            return {...state, posts:payload}
-
-        default:
-            return state
-    }
-}
-
-export const selectedPostReducer = ( state= {}, { type, payload }) => {
-    switch (type){
-        case ActionTypes.SELECTED_POST:
-            return {...state, ...payload}
-        case ActionTypes.REMOVE_SELECTED_POST:
-            return {}
+        case ActionTypes.FETCH_POSTS:
+                return {...state, posts:payload}    
+        // case ActionTypes.INCREMENT_LIKES:
+        //     return  {
+        //             ...state,
+        //                 posts: {
+        //                     ...state.posts,
+        //                     likes: state.allPosts.posts[payload].likes + 1
+        //                 }
+        //             }
+        // case ActionTypes.DECREMENT_LIKES:
+        //     return  {
+        //             ...state,
+        //                 posts: {
+        //                     ...state.posts,
+        //                     likes: state.allPosts.posts[payload].likes + 1
+        //                 }    
+        //             }
         default:
             return state
     }

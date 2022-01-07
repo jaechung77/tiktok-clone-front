@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Container } from 'react-bootstrap';
 import { GoogleLogin } from 'react-google-login';
 import HorizontalLine from '../components/HorizontalLine';
 import axios from 'axios';
+import requests from '../constants/Requests'
+
 
 const SignUpModal = ({ show, onHide }) => {
+	const [loginSuccess, setLoginSucess] = useState("")
 	const [nickName, setNickName] = useState("")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
@@ -15,14 +18,23 @@ const SignUpModal = ({ show, onHide }) => {
 	}
 
 	const handleSignUp = () => {
-		axios.post("users", data)
+		axios.post(requests.signup, data)
 		.then(res => {
 				console.log(res)
+				const accessToken = res.data.token
+				sessionStorage.setItem('accessToken', accessToken)
+				sessionStorage.setItem('nickName', res.data.user);
+				sessionStorage.setItem('userID', res.data.id);
 		})
 		.catch(err => {
+			console.log(requests.signup)
 			console.log(err)
 		})
 	}
+
+	useEffect(()=>{
+		onHide()
+	}, [loginSuccess])
 
 	return (
 		<Modal

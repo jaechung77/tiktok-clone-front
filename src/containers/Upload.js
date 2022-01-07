@@ -1,58 +1,82 @@
 import React, { useState } from 'react'
-import { Button, Form, Container, InputGroup } from 'react-bootstrap';
+import { Container, Button, Form, InputGroup } from 'react-bootstrap';
+import request from '../constants/Requests'
 import axios from 'axios';
+import '../App.css'
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 
 const Upload = () => {
 	const [title, setTitle] = useState("")
 	const [content, setContent] = useState("")
-	const [tag, setTag] = useState("")
 	const [viewer, setViewer] = useState("")
 	const [comment, setComment] = useState("")
-	const [videoFile, setVideoFile] = useState("Upload Boundary File")
+	const [videoFile, setVideoFile] = useState("")
+	const [hashtags_attributes, setHashtags_attributes] = useState([])
 	const formData = new FormData()
-	const jsonData = {
-		title,
-		content,
-		viewer,
-		comment_flag: comment==='on' ? true : false,
-		video_url: videoFile,
-		user_id: 1,
-		hashtags_attributes: [
-			{ tag,
-			}
-		]
-	}
-	const handleClick = () => {
-		formData.append('title', title)
-		formData.append('content', content)
-		formData.append('viewer', viewer)
-		formData.append('comment_flag', comment==='on' ? true : false)
-		formData.append('hashtags_attributes',  [{ tag}])
-		formData.append('tiktok_file', videoFile)
-		formData.append('user_id', 12)
-			axios({
-				method: "post", 
-				url: "posts",
-				data: formData,
-				headers: 
-				{ 
-					"Content-Type": "multipart/form-data",
+	const userID = sessionStorage.getItem('userID')
 
+	const handleSubmit = (e) => {
+		console.log(hashtags_attributes)
+		e.preventDefault();
+		formData.append('post[title]', title)
+		formData.append('post[content]', content)
+		formData.append('post[viewer]', viewer)
+		formData.append('post[comment_flag]', comment==='on' ? true : false)
+		formData.append('post[file]', videoFile)
+		formData.append('post[user_id]', userID)
+		hashtags_attributes.map((hashtags_attribute, index) => {
+			formData.append(`post[hashtags_attributes][${index}][tag]`, hashtags_attribute)
+		})
+
+		for (let key of formData.entries()) {
+			console.log(key[0] + ', ' + key[1]);
+		}
+
+			axios({
+				method: "post",
+				url: request.sendVideo,
+				data: formData,
+				contentType: false,
+				cache: false,
+				processData: false,
+				headers:
+				{
+					"Content-Type": "multipart/form-data",
 				},
 			})
 			.then(res => {
-					console.log(res)
+					console.log(res.data)
 			})
 			.catch(err => {
 				console.log(err)
 			})
-			// console.log(data)
 	}
-		
-	
+
+	const tags = [1, 2, 3].map((e, i) => {
+		return(
+			<>
+				<InputGroup className="mb-3">
+				<InputGroup.Text  id="basic-addon1">#</InputGroup.Text>
+				<Form.Control
+					id = "${i}"
+					type="text"
+					placeholder="Enter tag"
+					aria-describedby="basic-addon1"
+					onChange={e => setHashtags_attributes([...hashtags_attributes, e.target.value])}
+				/>
+				</InputGroup>
+			</>
+		)
+	})
+
+	console.log(tags)
+
 	return (
-		<Container>
-			<Form>
+		<div className="app">
+			<div className="app__mobile_form">
+				<Container className="bezel">
+					<div className="inner_bezel">
+			<Form onSubmit={handleSubmit}>
 				<Form.Group className="mb-3">
 					<Form.Label>Title</Form.Label>
 					<Form.Control
@@ -66,22 +90,14 @@ const Upload = () => {
 					<Form.Label>Content</Form.Label>
 					<Form.Control
 						as="textarea"
-						rows={3}
+						rows={2}
 						placeholder="Enter content"
 						onChange={e => setContent(e.target.value)}
 					/>
   			</Form.Group>
 
 				<Form.Label>Tag</Form.Label>
-				<InputGroup className="mb-3">
-					<InputGroup.Text  id="basic-addon1">#</InputGroup.Text>
-					<Form.Control
-						type="text"
-						placeholder="Enter tag"
-						aria-describedby="basic-addon1"
-						onChange={e => setTag(e.target.value)}
-					/>
-				</InputGroup>
+				{tags}
 
 				<Form.Group className="mb-3">
 					<Form.Label>Who can view this video</Form.Label>
@@ -100,27 +116,31 @@ const Upload = () => {
 						type={'checkbox'}
 						label={'Allow users to comment'}
 						onChange={e => setComment(e.target.value)}
-					/>					
+					/>
 				</Form.Group>
 
 				<Form.Group>
 					<Form.Control
 						type="file"
-						onChange={(e) => setVideoFile(e.target.files[0].name)}
+						onChange={(e) => setVideoFile(e.target.files[0])}
 					/>
       	</Form.Group>
 
-
 				<Button
 					variant="info"
-					type="button"
+					type="submit"
 					className="my-3 col-12"
-					onClick={handleClick}
 				>
 					Post
 				</Button>
 			</Form>
-		</Container>
+			</div>
+			<div style={{textAlign: 'center'}}>
+				<CircleOutlinedIcon style={{fontSize: '60px', paddingTop: "7px"}}/>
+			</div>
+			</Container>
+			</div>
+		</div>
 	)
 }
 

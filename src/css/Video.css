@@ -1,0 +1,47 @@
+.video {
+	position: relative;
+	background-color: rgb(19, 3, 3);
+	padding-top: 100px;
+	
+	height: 100%;
+	scroll-snap-align: start;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.video__player {
+
+	position: relative;
+	object-fit: contain;
+	/* width: 60%; */
+	width: 100%;
+	place-items: center;
+
+}
+
+.videoFooter {
+  position: relative;
+  color: white;
+  bottom: 100px;
+  display: flex;
+}
+
+.videoFooter__text {
+  flex: 1;
+  width: 100%;
+  padding: 10px;
+}
+
+.videoSidebar {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	color: white;
+}
+
+.videoSidebar__button {
+	padding: 10px;
+	text-align: center;
+}
