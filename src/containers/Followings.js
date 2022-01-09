@@ -5,25 +5,20 @@ import '../css/Video.css'
 import request from '../constants/Requests'
 import Video from './Video'
 import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts } from '../redux/actions/postActions'
 
 
 const Followings = () => {
-  const [videos, setVideos] = useState([])
+  const videos = useSelector((state) => state)
   const dispatch = useDispatch()
 
-useEffect(() => {
-    async function fetchData() {
-        const resp = await axios.get(request.fetchVideos)
-        console.log("FETCH FROM Follwoings:", resp.data)
-        setVideos(resp.data)
-        dispatch(resp.data.likes)
-        return resp
-    }
-    fetchData()
-}, [])
+	useEffect(()=>{
+		dispatch(fetchPosts())
+	}, [])
+	console.log("Videos:", videos)
 
-  const renderVideos = videos.map((video, i) =>{
+  const renderVideos = videos.allPosts.posts.map((video, i) =>{
     const {id, title, content, file, nick_name } = video
     return(
       <Col sm={4}>
@@ -36,6 +31,7 @@ useEffect(() => {
               title={title}
               content={content}
               nickName={nick_name}
+              index={i}
             />
           </div>
       </div>

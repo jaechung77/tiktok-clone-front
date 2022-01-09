@@ -45,3 +45,19 @@
 	padding: 10px;
 	text-align: center;
 }
+
+.videoSidebar__button_danger {
+	padding: 10px;
+	text-align: center;
+	color: red;
+	bottom: 30px;
+	font-size: large;
+}
+
+.videoSidebar__button_info {
+	padding: 10px;
+	text-align: center;
+	color: yellow;
+	bottom: 30px;
+	font-size: large;
+}

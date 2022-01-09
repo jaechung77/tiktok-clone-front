@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container  } from 'react-bootstrap';
 import SignUpModal from '../modals/SignUpModal';
 import SignInModal from '../modals/SignInModal';
 import { Navigate } from 'react-router'
@@ -10,6 +10,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { green } from '@mui/material/colors';
 import Search from '../containers/Search';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 
@@ -24,7 +25,8 @@ const Header = () => {
 	const handleSignout = () => {
 		sessionStorage.removeItem('nickName')
 		sessionStorage.removeItem('userID')
-		return (<Navigate to = '/Home' />)
+		console.log("EEEEEEEEEEE")
+		window.location.href = '/'
 	}
 
   return (
@@ -41,9 +43,9 @@ const Header = () => {
 						<Nav className="ms-auto">
 							<Stack direction="row" spacing={2}>
 								<Search />
-								<Nav.Link href="/">
-									<HomeIcon style={{fontSize: '45px'}} />
-								</Nav.Link>	
+								<Nav.Link href="/Followings">
+										<HomeIcon style={{fontSize: '45px'}} />
+								</Nav.Link>
 								<Nav.Link href="/Followings">
 									<PeopleOutlineIcon style={{fontSize: '45px'}} />
 								</Nav.Link>	
