@@ -8,25 +8,24 @@ const initialState = {
 export const postReducer = ( state= initialState, { type, payload }) => {
     switch (type){
         case ActionTypes.FETCH_POSTS:
-                return {...state, posts:payload}    
+                return {...state, posts:payload}
+
+        case ActionTypes.FETCH_FOLLOWS:
+                return {...state, posts:payload}        
+
         case ActionTypes.INCREMENT_LIKES:
-            console.log("Likes is >>>>>>>>>",payload.id)
-            console.log("Rducer is >>>>>>>>>",state.posts[1].id)
-            const postIndex = state.posts.findIndex(post => post.id === payload.id);
-            console.log("postIndex is >>>>>>>>>", postIndex)
-            if (postIndex !== -1) {
-              return state.posts.map((post, i) => ({
-                    posts: {
-                    ...post,
-                    likes: post.likes + (postIndex === i ? 1 : 0),
-                    }
-              })
-            )
-            } else {
-              return {
-                  posts: [...state.posts]
-              }    
-            }
+            const incList = state.posts.map((post) => {
+                if (post.id === payload.id)
+                {
+                    console.log("post id", post.id)
+                     return {...post, likes: post.likes + 1}
+                }
+                return {...post}
+            })
+            const fmtList = { posts: incList}
+            return fmtList
+            
+
 
         case ActionTypes.DECREMENT_LIKES:
             return  {

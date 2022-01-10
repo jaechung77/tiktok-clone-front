@@ -7,6 +7,11 @@ export const fetchPosts = () => async (dispatch) => {
         dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
 }
 
+export const fetchFollows = () => async (dispatch) => {
+    const res = await axios.get(request.fetchFollows + "/" + sessionStorage.getItem("userID"))
+    dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
+}
+
 export const incrementLikes = (index) => {
     return{
         type: ActionTypes.INCREMENT_LIKES,

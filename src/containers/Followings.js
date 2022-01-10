@@ -6,15 +6,16 @@ import request from '../constants/Requests'
 import Video from './Video'
 import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../redux/actions/postActions'
+import { fetchFollows } from '../redux/actions/postActions'
 
 
 const Followings = () => {
   const videos = useSelector((state) => state)
   const dispatch = useDispatch()
+  // const followeeID = useParams()
 
 	useEffect(()=>{
-		dispatch(fetchPosts())
+		dispatch(fetchFollows())
 	}, [])
 	console.log("Videos:", videos)
 

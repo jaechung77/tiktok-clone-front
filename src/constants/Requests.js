@@ -7,7 +7,8 @@ const requests = {
   login: `${API}/login`,
   signup: `${API}/users`,
   fetchVideo: `${API}/posts`,
-  fetchHashtags: `${API}/posts`
+  fetchHashtags: `${API}/posts`,
+  fetchFollows: `${API}/follows`
 }
 
 export default requests
