@@ -4,6 +4,7 @@ import request from '../constants/Requests'
 import axios from 'axios';
 import '../App.css'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import { useNavigate } from 'react-router-dom';
 
 const Upload = () => {
 	const [title, setTitle] = useState("")
@@ -11,12 +12,16 @@ const Upload = () => {
 	const [viewer, setViewer] = useState("")
 	const [comment, setComment] = useState("")
 	const [videoFile, setVideoFile] = useState("")
-	const [hashtags_attributes, setHashtags_attributes] = useState([])
+	const [hashtags_attributes0, setHashtags_attributes0] = useState("")
+	const [hashtags_attributes1, setHashtags_attributes1] = useState("")
+	const [hashtags_attributes2, setHashtags_attributes2] = useState("")
 	const formData = new FormData()
 	const userID = sessionStorage.getItem('userID')
+	const navigate = useNavigate()
 
 	const handleSubmit = (e) => {
-		console.log(hashtags_attributes)
+		
+		// console.log(hashtags_attributes)
 		e.preventDefault();
 		formData.append('post[title]', title)
 		formData.append('post[content]', content)
@@ -24,15 +29,20 @@ const Upload = () => {
 		formData.append('post[comment_flag]', comment==='on' ? true : false)
 		formData.append('post[file]', videoFile)
 		formData.append('post[user_id]', userID)
-		hashtags_attributes.map((hashtags_attribute, index) => {
-			formData.append(`post[hashtags_attributes][${index}][tag]`, hashtags_attribute)
-		})
+		// hashtags_attributes.map((hashtags_attribute, index) => {
+		// 	formData.append(`post[hashtags_attributes][${index}][tag]`, hashtags_attribute)
+		// })
+
+		formData.append(`post[hashtags_attributes][0][tag]`, hashtags_attributes0)
+		formData.append(`post[hashtags_attributes][1][tag]`, hashtags_attributes1)
+		formData.append(`post[hashtags_attributes][2][tag]`, hashtags_attributes2)
 
 		for (let key of formData.entries()) {
 			console.log(key[0] + ', ' + key[1]);
 		}
-
-			axios({
+		console.log("FORM DATA<<<<>>>>",formData )
+		async function postVideo() {
+			const res = await axios({
 				method: "post",
 				url: request.sendVideo,
 				data: formData,
@@ -50,6 +60,13 @@ const Upload = () => {
 			.catch(err => {
 				console.log(err)
 			})
+			return res
+		}
+			const res = postVideo()
+			if (res) {
+			  alert("Uploaded")
+				navigate({ pathname: '/' })
+			}
 	}
 
 	const tags = [1, 2, 3].map((e, i) => {
@@ -62,7 +79,7 @@ const Upload = () => {
 					type="text"
 					placeholder="Enter tag"
 					aria-describedby="basic-addon1"
-					onChange={e => setHashtags_attributes([...hashtags_attributes, e.target.value])}
+					onChange={e => setHashtags_attributes0( e.target.value)}
 				/>
 				</InputGroup>
 			</>
@@ -70,6 +87,7 @@ const Upload = () => {
 	})
 
 	console.log(tags)
+
 
 	return (
 		<div className="app">
@@ -97,7 +115,36 @@ const Upload = () => {
   			</Form.Group>
 
 				<Form.Label>Tag</Form.Label>
-				{tags}
+				<InputGroup className="mb-3">
+				<InputGroup.Text  id="basic-addon1">#</InputGroup.Text>
+				<Form.Control
+					id = "${i}"
+					type="text"
+					placeholder="Enter tag"
+					aria-describedby="basic-addon1"
+					onChange={e => setHashtags_attributes0( e.target.value)}
+				/>
+				</InputGroup>
+				<InputGroup className="mb-3">
+				<InputGroup.Text  id="basic-addon1">#</InputGroup.Text>
+				<Form.Control
+					id = "${i}"
+					type="text"
+					placeholder="Enter tag"
+					aria-describedby="basic-addon1"
+					onChange={e => setHashtags_attributes1( e.target.value)}
+				/>
+				</InputGroup>
+				<InputGroup className="mb-3">
+				<InputGroup.Text  id="basic-addon1">#</InputGroup.Text>
+				<Form.Control
+					id = "${i}"
+					type="text"
+					placeholder="Enter tag"
+					aria-describedby="basic-addon1"
+					onChange={e => setHashtags_attributes2( e.target.value)}
+				/>
+				</InputGroup>
 
 				<Form.Group className="mb-3">
 					<Form.Label>Who can view this video</Form.Label>

@@ -6,32 +6,42 @@ import Video from './Video'
 import { setPosts } from '../redux/actions/postActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../redux/actions/postActions'
-
+import { useCookies } from 'react-cookie'
 
 
 const Home = () => {
 	const videos = useSelector((state) => state)
+	const [ rerender, setRerender] = useState(true)
 	const dispatch = useDispatch()
+	const [cookies, setCookie] = useCookies(['accessToken'])
 
 	useEffect(()=>{
 		dispatch(fetchPosts())
+		// setRerender(false)
 	}, [])
-console.log("Videos:", videos)
+console.log("Cookie:>>>>>>>>", cookies.accessToken)
 
 	const renderVideos = videos.allPosts.posts.map((video, i) =>{
-		const {id, title, content, file, nick_name } = video
+		const {id, title, content, file, nick_name, viewer, user_id, status, likes } = video
 		return(
 			<div className="app" >
 			<div className="app__mobile">
+			{console.log("Each video URL:", `${request.API}${file.url}`)}
 				{console.log("Key From Home:", i)}
+				{ video.file && 
 					<Video
 						src={`${request.API}${file.url}`}
-						key={id}
+						videoID={id}
 						title={title}
 						content={content}
 						nickName={nick_name}
 						index={i}
+						shares={viewer}
+						posterID = {user_id}
+						status= {status}
+						likes = {likes}
 					/>
+				}
 				</div>
 			</div>
 		)

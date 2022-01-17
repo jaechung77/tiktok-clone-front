@@ -17,24 +17,22 @@ const SignUpModal = ({ show, onHide }) => {
 		password,
 	}
 
-	const handleSignUp = () => {
-		axios.post(requests.signup, data)
+	const handleSignUp = async () => {
+		const res = await axios.post(requests.signup, data)
 		.then(res => {
-				console.log(res)
+				console.log("Signed UP", res)
 				const accessToken = res.data.token
 				sessionStorage.setItem('accessToken', accessToken)
 				sessionStorage.setItem('nickName', res.data.user);
 				sessionStorage.setItem('userID', res.data.id);
+				onHide()
 		})
-		.catch(err => {
-			console.log(requests.signup)
-			console.log(err)
-		})
+
 	}
 
-	useEffect(()=>{
-		onHide()
-	}, [loginSuccess])
+	// useEffect(()=>{
+
+	// })
 
 	return (
 		<Modal
@@ -92,7 +90,7 @@ const SignUpModal = ({ show, onHide }) => {
 					Sign Up
 				</Button>
 
-				<HorizontalLine text={"OR"} />
+				{/* <HorizontalLine text={"OR"} />
 				<GoogleLogin 
 					render={renderProps=>{
 						return (
@@ -106,7 +104,7 @@ const SignUpModal = ({ show, onHide }) => {
 							</Button>
 						)
 					}}
-				/>
+				/> */}
 			</Container>
 		</Modal>
 	)

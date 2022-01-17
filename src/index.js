@@ -5,13 +5,17 @@ import './index.css';
 import './bootstrap.min.css';
 import App from './App';
 import store from './redux/store';
+import { CookiesProvider } from 'react-cookie'
+
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-    <App />
-    </Provider>
+    <CookiesProvider>
+      <Provider store={store}>
+          <App />
+      </Provider>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

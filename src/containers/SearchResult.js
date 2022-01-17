@@ -6,24 +6,25 @@ import request from '../constants/Requests'
 import Video from './Video'
 import { useParams } from 'react-router-dom'
 import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchFollows } from '../redux/actions/postActions'
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { fetchSearchposts } from '../redux/actions/postActions'
 
 
-const Followings = () => {
+const SearchResult = () => {
+  const searchStr = useSelector((state) => state.searchString.searchstring)
+  const [ render, setRender ] = useState(false)
+  const userID = sessionStorage.getItem('userID')
   const videos = useSelector((state) => state)
-  const { categoryID } = useParams()
   const dispatch = useDispatch()
-
-
-
+  
 	 useEffect(()=>{
-    dispatch(fetchFollows(categoryID))
-    console.log("FOLLOWING RENDERING >>>>>>>>>>>>>>>")
-	 }, [categoryID])
+    console.log("Search String is >>>>>>>>>>>>>>>", searchStr)
+    dispatch(fetchSearchposts(searchStr))
+     console.log("State is changed")
+	 }, [searchStr])
 	console.log("Videos:", videos)
-  console.log("DARA>>>>>>>>>>>FOOOO>>>:", videos.allFollows.follows)
-  const renderVideos = videos.allFollows.follows.map((video, i) =>{
+  console.log("DARA>>>>>>>>>>>FOOOO>>>:", videos.searchPosts.searchposts)
+  const renderVideos = videos.searchPosts.searchposts.map((video, i) =>{
     const {id, title, content, file, nick_name, viewer, user_id, status, likes } = video
     return(
       <Col sm={4}>
@@ -59,4 +60,4 @@ const Followings = () => {
   )
 }
 
-export default Followings
+export default SearchResult

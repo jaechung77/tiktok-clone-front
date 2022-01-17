@@ -7,23 +7,22 @@ import Video from './Video'
 import { useParams } from 'react-router-dom'
 import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFollows } from '../redux/actions/postActions'
+import { fetchMyposts } from '../redux/actions/postActions'
 
 
-const Followings = () => {
+const Manage = () => {
   const videos = useSelector((state) => state)
-  const { categoryID } = useParams()
   const dispatch = useDispatch()
-
+  const userID = sessionStorage.getItem('userID')
 
 
 	 useEffect(()=>{
-    dispatch(fetchFollows(categoryID))
-    console.log("FOLLOWING RENDERING >>>>>>>>>>>>>>>")
-	 }, [categoryID])
+    dispatch(fetchMyposts(userID))
+    console.log("My Posts RENDERING >>>>>>>>>>>>>>>")
+	 }, [userID])
 	console.log("Videos:", videos)
-  console.log("DARA>>>>>>>>>>>FOOOO>>>:", videos.allFollows.follows)
-  const renderVideos = videos.allFollows.follows.map((video, i) =>{
+  console.log("DARA>>>>>>>>>>>FOOOO>>>:", videos.myPosts.myposts)
+  const renderVideos = videos.myPosts.myposts.map((video, i) =>{
     const {id, title, content, file, nick_name, viewer, user_id, status, likes } = video
     return(
       <Col sm={4}>
@@ -59,4 +58,4 @@ const Followings = () => {
   )
 }
 
-export default Followings
+export default Manage

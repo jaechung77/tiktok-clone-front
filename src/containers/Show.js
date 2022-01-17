@@ -9,13 +9,17 @@ import '../App.css'
 import Follow from './Follow'
 import request from '../constants/Requests'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-
+import { fetchPost } from '../redux/actions/postActions'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Show = () => {
+	const videos = useSelector((state) => state)
 	const { postID } = useParams()
-	const [ video, setVideo ] = useState([])
+	// const [ video, setVideo ] = useState("")
 	const [playing, setPlaying] = useState(false)
 	const videoRef = useRef(null)
+	const dispatch = useDispatch()
+
 
 	const onVideoPress = () => {
 		if (playing) { 
@@ -26,18 +30,16 @@ const Show = () => {
 			setPlaying(true)
 		} 
 	}
+	const video = videos.allPost.post
+	useEffect(()=>{
+		console.log("Here1")
+		dispatch(fetchPost(postID))
+		console.log("Here2")
+		console.log("postID from show >>>>>", postID)
 
-	useEffect(() => {
-		async function fetchData() {
-				const resp = await axios.get(request.fetchVideo + "/" + postID)
-				console.log("Video Data From Show:", resp.data)
-				setVideo(resp.data)
-				// console.log("Video URL From Show:", video.file.url)
-				return resp
-		}
-		fetchData()
-		console.log(request.fetchVideo)
-}, [postID])
+	}, [postID])
+	// setVideo(videos.allPosts.posts)
+
 
 	return (
 		<div className="app" >
@@ -54,6 +56,7 @@ const Show = () => {
 										onClick={onVideoPress}
 										style={{}}
 									></video>
+									
 								}
 						</div>
 					</Col>
@@ -64,7 +67,6 @@ const Show = () => {
 										<div >
 											<Hashtag />
 											<Comment postID={postID}/> 
-											<Follow />
 										</div>
 									</Col>
 								</Row>

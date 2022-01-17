@@ -61,3 +61,17 @@
 	bottom: 30px;
 	font-size: large;
 }
+
+.videoTopbar {
+	position: absolute;
+	top: 0%;
+	right: 100px;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+}
+
+.videoTopbar__button {
+	padding: 10px;
+	text-align: center;
+}

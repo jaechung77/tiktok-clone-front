@@ -5,6 +5,8 @@ import HorizontalLine from '../components/HorizontalLine';
 import axios from 'axios';
 import requests from '../constants/Requests'
 import SignUpModal from '../modals/SignUpModal';
+import { useCookies } from 'react-cookie'
+
 
 const SignInModal = ({ show, onHide }) => {
 	const [email, setEmail] = useState("")
@@ -12,6 +14,7 @@ const SignInModal = ({ show, onHide }) => {
 	const [error, setError] = useState(null)
 	const [signUpModalOn, setSignUpModalOn] = useState(false)
 	const [loginSuccess, setLoginSucess] = useState("")
+	const [cookies, setCookie] = useCookies(['accessToken'])
 	const errorDiv = error ?
 		<Form.Label  
 			className="error" 
@@ -35,8 +38,10 @@ const SignInModal = ({ show, onHide }) => {
 				setError(res.data.error)
 				const accessToken = res.data.token
 
-
-				sessionStorage.setItem('accessToken', accessToken)
+				// setCookie('accessToken', accessToken, { path: '/', httpOnly: true })
+				setCookie('accessToken', accessToken, { path: '/'})
+				console.log('COOOOOKIE<<<', cookies.accessToken)
+				// sessionStorage.setItem('accessToken', accessToken)
 				axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
 				console.log(res.data)
 				console.log(res.data.nick_name)
@@ -44,6 +49,7 @@ const SignInModal = ({ show, onHide }) => {
 				sessionStorage.setItem('userID', res.data.id);
 				console.log("session>>>>>>", sessionStorage.getItem('nickName'))
 				setLoginSucess(res.data.id)
+				onHide()
 		})
 		.catch(err => {
 			console.log("err>>>>", err)
@@ -55,7 +61,7 @@ const SignInModal = ({ show, onHide }) => {
 		useEffect(()=>{
 			if (loginSuccess) {
 				console.log("login Success >>>>", loginSuccess)
-				onHide()
+
 			}
 		}, [loginSuccess])
 
@@ -104,7 +110,7 @@ const SignInModal = ({ show, onHide }) => {
 					Sign In
 				</Button>
 
-				<HorizontalLine text={"OR"} />
+				{/* <HorizontalLine text={"OR"} />
 				<GoogleLogin 
 					render={renderProps=>{
 						return (
@@ -118,7 +124,7 @@ const SignInModal = ({ show, onHide }) => {
 							</Button>
 						)
 					}}
-				/>
+				/> */}
 
 				<HorizontalLine text={"OR"} />
 				<Button 

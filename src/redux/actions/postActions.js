@@ -7,9 +7,64 @@ export const fetchPosts = () => async (dispatch) => {
         dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
 }
 
-export const fetchFollows = () => async (dispatch) => {
-    const res = await axios.get(request.fetchFollows + "/" + sessionStorage.getItem("userID"))
-    dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
+export const fetchMyposts = (index) => async (dispatch) => {
+    const res = await axios.get(request.fetchMyposts+"/"+index+"/mypost")
+    dispatch({type:ActionTypes.FETCH_MYPOSTS, payload: res.data})
+}
+
+export const fetchSearchposts = (searchStr) => async (dispatch) => {
+    const jsonData = {"nick_name": `${searchStr}`}
+    const res = await axios.post(request.fetchMyposts+"/1/find", jsonData)
+    console.log("url: >>>>>>", request.fetchMyposts+"/1/find")
+    console.log("jSON: >>>>>>", jsonData)
+    dispatch({type:ActionTypes.FETCH_SEARCHPOSTS, payload: res.data})
+    console.log("SEARCHED", res.data)
+}
+
+export const searchString = (str) => async (dispatch) => {
+    const res = await str
+    dispatch ({
+        type: ActionTypes.SEARCH_STRING,
+        payload: res,
+    })
+}
+
+export const fetchPost = (index) => async (dispatch) => {
+    console.log("FETCHING VIDEO FROM>>>", request.fetchVideo+"/"+index)
+    const res = await axios.get(request.fetchVideo+"/"+index)
+    console.log("FETCHING VIDEO FROM>>>", request.fetchVideo+"/"+index)
+    dispatch({type:ActionTypes.FETCH_POST, payload: res.data})
+}
+
+export const fetchFollows = (categoryID) => async (dispatch) => {
+    let actionName = ""
+    if (categoryID === "2"){
+        actionName = "show_requested"
+    }
+    else if (categoryID === "3"){
+        actionName = "show_to_accept"
+    }
+    else if (categoryID === "4"){
+        actionName = "show_friends"
+    }
+    else if (categoryID === "1"){
+        actionName = "show_to_follow"
+    }
+    else if (categoryID === "5"){
+        actionName = "show_relationship"
+    }
+    else {
+        actionName = "show_all"
+    }
+
+    console.log("actionName >>>>>", actionName)
+    const res = await axios.get(request.fetchFollows + "/" + sessionStorage.getItem("userID")+ "/" + actionName)
+    console.log("UUUUURRRRRRLLLLLL   ", request.fetchFollows + "/" + sessionStorage.getItem("userID")+ "/" + actionName)
+    dispatch({type:ActionTypes.FETCH_FOLLOWS, payload: res.data})
+}
+
+export const addLikes = (index) => {
+
 }
 
 export const incrementLikes = (index) => {
