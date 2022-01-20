@@ -26,8 +26,6 @@ console.log("Cookie:>>>>>>>>", cookies.accessToken)
 		return(
 			<div className="app" >
 			<div className="app__mobile">
-			{console.log("Each video URL:", `${request.API}${file.url}`)}
-				{console.log("Key From Home:", i)}
 				{ video.file && 
 					<Video
 						src={`${request.API}${file.url}`}
@@ -40,6 +38,7 @@ console.log("Cookie:>>>>>>>>", cookies.accessToken)
 						posterID = {user_id}
 						status= {status}
 						likes = {likes}
+						key = {id}
 					/>
 				}
 				</div>

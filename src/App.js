@@ -8,6 +8,7 @@ import Followings from './containers/Followings'
 import Header from './layouts/Header'
 import Manage from './containers/Manage'
 import SearchResult from './containers/SearchResult'
+import Profile from './containers/Profile'
 import axios from 'axios';
 import { useCookies } from 'react-cookie'
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/followings/:categoryID"  element={<Followings/>} />
           <Route path="/manage/:userID"  element={<Manage/>} />
           <Route path="/search"  element={<SearchResult/>} />
+          <Route path="/profile"  element={<Profile/>} />
           <Route>404 Not Found!</Route>
         </Routes>
 

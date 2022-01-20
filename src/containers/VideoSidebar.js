@@ -10,8 +10,9 @@ import { Row, Col, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import requests from '../constants/Requests'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
-const VideoSidebar = ({shares, index, videoID, posterID, status, likes, nickName}) => {
+const VideoSidebar = ({shares, index, videoID, posterID, status, likes, nickName, src}) => {
   // const likes = useSelector((state) => state.allPosts.posts[index].likes)
   // const shares = useSelector((state) => state.allPosts.posts[index].views)
   const postObject = useSelector((state) => state.allPosts.posts[index])
@@ -29,8 +30,11 @@ const VideoSidebar = ({shares, index, videoID, posterID, status, likes, nickName
   const navigate = useNavigate()
   const [ followID, setFollowID ] = useState("")
   const [ rerender, setRerender] = useState(0)
+  const [ copied, setCopied ] = useState(false)
 
-  console.log("key from VidesSidebar>>>", index)
+
+  const clipboard = src
+  console.log("IN DA CLIPBOARD", clipboard)
   let actionString = ""
   if (status === 2 ){
     actionString = "CANCEL FOLLOW" // 2=> Delete Row
@@ -132,6 +136,7 @@ const VideoSidebar = ({shares, index, videoID, posterID, status, likes, nickName
       console.log("Share res>>>", res)
       setShareSuccess(true)
       fetchShares()
+      alert("Copied to clipboard")
     })
 		.catch(err => {
 			console.log("err>>>>", err)
@@ -211,7 +216,7 @@ const VideoSidebar = ({shares, index, videoID, posterID, status, likes, nickName
 
 
   useEffect(()=>{
-    console.log("Use Effect Triggered")
+ 
     // deleteFollow()
   }, [rerender])
 
@@ -220,11 +225,11 @@ const VideoSidebar = ({shares, index, videoID, posterID, status, likes, nickName
     <>
     <Row className="videoTopbar">
         <Col className="videoTopbar__button">
-          <Button type="button" class="btn btn-danger" onClick={handleFollows}>{actionString}</Button>
+          <Button type="button" className="btn btn-danger" onClick={handleFollows}>{actionString}</Button>
         </Col>
         <Col className="videoTopbar__button">
         <Link to = {`/show/${videoID}`}>
-          <Button type="button" class="btn btn-info" >{videoID}</Button>
+          <Button type="button" className="btn btn-info" style={{marginTop: "45vh"}}>More</Button>
         </Link>  
         </Col>
     </Row>          
@@ -244,10 +249,13 @@ const VideoSidebar = ({shares, index, videoID, posterID, status, likes, nickName
           )}
           <br/>{noOfLikes}
       </div>
-      <div className="videoSidebar__button">
-        <ShareIcon onClick = {handleShares}/>
-        <br/>{noOfShares}
-      </div> 
+      <CopyToClipboard text={clipboard}
+        onCopy={e => {setCopied(true)}}>
+        <div className="videoSidebar__button">
+          <ShareIcon onClick = {handleShares}/>
+          <br/>{noOfShares}
+        </div> 
+      </CopyToClipboard>
     </div>
     </>
   )

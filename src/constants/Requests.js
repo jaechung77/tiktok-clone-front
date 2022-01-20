@@ -15,6 +15,7 @@ const requests = {
   addFollows: `${API}/follows`,
   findFollows: `${API}/follows/1/find`,
   fetchMyposts:`${API}/posts`,
+  postPasswordChange: `${API}/password_change`,
 }
 
 export default requests

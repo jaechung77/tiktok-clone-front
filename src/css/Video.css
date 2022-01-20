@@ -65,10 +65,11 @@
 .videoTopbar {
 	position: absolute;
 	top: 0%;
-	right: 100px;
+	right: 95px;
 	color: white;
 	display: flex;
 	justify-content: space-between;
+	flex-direction: column;
 }
 
 .videoTopbar__button {

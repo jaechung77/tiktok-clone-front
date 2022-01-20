@@ -99,6 +99,11 @@ export default function Header() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  }
+
+  const handleProfile = () => {
+    handleMenuClose()
+    navigate({ pathname: '/profile' })    
   };
 
   const handlePosts= () => {
@@ -140,7 +145,7 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+        <MenuItem onClick={handleProfile}>Profile</MenuItem>
         <MenuItem onClick={handlePosts}>Manage Posts</MenuItem> 
         <MenuItem onClick={handleSignout}>Log Out</MenuItem>
 

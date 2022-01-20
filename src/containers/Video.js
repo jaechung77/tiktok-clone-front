@@ -22,10 +22,10 @@ const Video = ({src, index, key, title, nickName, videoID, shares, posterID, sta
 			setPlaying(true)
 		} 
 	}
-	console.log("Video:", videoID)
-	console.log("nickName from video>>>", nickName)
-	console.log("User ID>>>:", userID)
-	console.log("Params", location.pathname)
+	// console.log("Video:", videoID)
+	// console.log("nickName from video>>>", nickName)
+	// console.log("User ID>>>:", userID)
+	// console.log("Params", location.pathname)
 	if (location.pathname.includes('manage')) {
 		deleteMode = true
 	}
@@ -42,6 +42,7 @@ const Video = ({src, index, key, title, nickName, videoID, shares, posterID, sta
 				ref={videoRef}
 				loop
 				onClick={onVideoPress}
+				key = {key}
 			></video>
 			<VideoFooter title={title} nickName= {nickName}/>
 			{ deleteMode &&
@@ -52,7 +53,7 @@ const Video = ({src, index, key, title, nickName, videoID, shares, posterID, sta
 				<>
 					{ userID  && userID !== "" && !deleteMode
 					?
-					<><VideoSidebar  shares={shares} key={key} index={index} videoID={videoID} posterID={posterID} status={status} likes={likes} nickName= {nickName}/></>
+					<><VideoSidebar  shares={shares} key={key} index={index} videoID={videoID} posterID={posterID} status={status} likes={likes} nickName= {nickName} src={src}/></>
 					:
 					<></>
 					}

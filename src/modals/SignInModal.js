@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button, Form, Container } from 'react-bootstrap';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, GoogleLogout  } from 'react-google-login';
 import HorizontalLine from '../components/HorizontalLine';
 import axios from 'axios';
 import requests from '../constants/Requests'
 import SignUpModal from '../modals/SignUpModal';
 import { useCookies } from 'react-cookie'
 
+const clientId = '187979948908-33g3acpa910mo6i3o30h270n9tn8q9c6.apps.googleusercontent.com'
 
 const SignInModal = ({ show, onHide }) => {
 	const [email, setEmail] = useState("")
@@ -15,6 +16,11 @@ const SignInModal = ({ show, onHide }) => {
 	const [signUpModalOn, setSignUpModalOn] = useState(false)
 	const [loginSuccess, setLoginSucess] = useState("")
 	const [cookies, setCookie] = useCookies(['accessToken'])
+	const [showloginButton, setShowloginButton] = useState(true);
+	const [showlogoutButton, setShowlogoutButton] = useState(false);
+	const [loginData, setLoginData] = useState(null)
+	const [loginClicked, setLoginClicked] = useState(null)
+
 	const errorDiv = error ?
 		<Form.Label  
 			className="error" 
@@ -29,41 +35,88 @@ const SignInModal = ({ show, onHide }) => {
 		password,
 	}
 
-	const handleSignIn = (e) => {
-		e.preventDefault()
-		setError(null)
-		axios.post(requests.login, data)
-		.then(res => {
-				console.log("res>>>", res)
-				setError(res.data.error)
-				const accessToken = res.data.token
+	const onLoginSuccess = (res) => {
+		console.log('Login Success:', res.profileObj);
+		setShowloginButton(false);
+		setShowlogoutButton(true);
+};
 
-				// setCookie('accessToken', accessToken, { path: '/', httpOnly: true })
-				setCookie('accessToken', accessToken, { path: '/'})
-				console.log('COOOOOKIE<<<', cookies.accessToken)
-				// sessionStorage.setItem('accessToken', accessToken)
-				axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-				console.log(res.data)
-				console.log(res.data.nick_name)
-				sessionStorage.setItem('nickName', res.data.user);
-				sessionStorage.setItem('userID', res.data.id);
-				console.log("session>>>>>>", sessionStorage.getItem('nickName'))
-				setLoginSucess(res.data.id)
-				onHide()
-		})
-		.catch(err => {
-			console.log("err>>>>", err)
-		})
+const onLoginFailure = (res) => {
+		console.log('Login Failed:', res);
+		show()
+};
+
+const onSignoutSuccess = () => {
+		alert("You have been logged out successfully");
+		console.clear();
+		setShowloginButton(true);
+		setShowlogoutButton(false);
+};
+
+const isValid = () => {
+	if (email === ""){
+		setError("Please type your email")
+		return false
 	}
-	console.log("signUp>>>>", signUpModalOn)
+	if (password === ""){
+		setError("Please type password")
+		return false
+	}
+	return true
+}
+
+const handleSignIn =  () => {
+		if (!isValid()){
+			setLoginSucess(false)
+			return null
+		}
+		fetchLogin()
+		.then(res =>{
+			console.log("Returned    " , res)
+			console.log("login Success", loginSuccess)
+
+				logindataSetter(res)
+				console.log("In the if clause")
+				onHide()
+				window.location.reload()
+
+		})
+}
+
+const logindataSetter = (resp) => {
+
+	const accessToken = resp.token
+	console.log("Login Data from 66", resp)
+	setCookie('accessToken', accessToken, { path: '/'})
+	axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+	sessionStorage.setItem('nickName', resp.user);
+	sessionStorage.setItem('userID', resp.id);
+	console.log("userName from 73", resp.id )
+	console.log("userName from 74", resp.user )
+	console.log("session>>>>>>", sessionStorage.getItem('nickName'))
+	
+}
 
 
-		useEffect(()=>{
-			if (loginSuccess) {
-				console.log("login Success >>>>", loginSuccess)
+const fetchLogin = async () => {
+	try {
+		const response =   await axios.post(requests.login, data)
+		console.log("Line 81", response.data)
+		setLoginSucess(true)
+		return response.data
+	}
+	catch(err) {
+		console.log(err.response.data.error)
+		setLoginSucess(false)
+		setError(err.response.data.error)
+	}
+}
 
-			}
-		}, [loginSuccess])
+useEffect(()=>{
+	// setLoginSucess(false)
+	console.log("triggered")
+}, [loginClicked])
+
 
 	return (
 		<>
@@ -125,12 +178,31 @@ const SignInModal = ({ show, onHide }) => {
 						)
 					}}
 				/> */}
+						<HorizontalLine text={"OR"} />
+            { showloginButton ?
+                <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Sign In"
+                    onSuccess={onLoginSuccess}
+                    onFailure={onLoginFailure}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
+                /> : null}
+
+            { showlogoutButton ?
+                <GoogleLogout
+                    clientId={clientId}
+                    buttonText="Sign Out"
+                    onLogoutSuccess={onSignoutSuccess}
+                >
+                </GoogleLogout> : null
+            }
 
 				<HorizontalLine text={"OR"} />
 				<Button 
 					col-12 variant="info" 
 					type="button" 
-					className="my-3 col-12" 
+					className="my-3 col-12 btn-danger" 
 					onClick={(e) => {onHide(); setSignUpModalOn(true)}}
 				>
 					Sign Up

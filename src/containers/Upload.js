@@ -12,17 +12,76 @@ const Upload = () => {
 	const [viewer, setViewer] = useState("")
 	const [comment, setComment] = useState("")
 	const [videoFile, setVideoFile] = useState("")
+	const [error, setError] = useState(null)
 	const [hashtags_attributes0, setHashtags_attributes0] = useState("")
 	const [hashtags_attributes1, setHashtags_attributes1] = useState("")
 	const [hashtags_attributes2, setHashtags_attributes2] = useState("")
+	const [uploadSuccess, setUploadSuccess] = useState(null)
 	const formData = new FormData()
 	const userID = sessionStorage.getItem('userID')
 	const navigate = useNavigate()
+
+	const errorDiv = error ?
+		<Form.Label  
+			className="error" 
+			style={{color: 'red'}}
+		>
+			{error}
+		</Form.Label>
+		:
+		 ''
+	const getExtension = (filename) => {
+		const parts = filename.name.split('.')
+		return parts[parts.length - 1]
+	}
+
+	const isVideo = (filename) => {
+		const ext = getExtension(filename);
+		switch (ext.toLowerCase()) {
+			case 'm4v':
+			case 'avi':
+			case 'mpg':
+			case 'mp4':
+				return true;
+		}
+		return false;
+	}
+
+	const isValid = () => {
+
+		if (title === ""){
+			setError("Title cannot be empty")
+			return false
+		}
+		if (content === ""){
+			setError("Content cannot be empty")
+			return false
+		}
+		if (videoFile === ""){
+			setError("You must upload video file")
+			return false
+		}
+		if (!isVideo(videoFile)) {
+			setError("The file format is not supported")
+			return false
+		}
+		console.log(videoFile)
+		return true
+	}
+
 
 	const handleSubmit = (e) => {
 		
 		// console.log(hashtags_attributes)
 		e.preventDefault();
+
+		if (!isValid()){
+			setUploadSuccess(false)
+			return null
+		}	
+
+
+
 		formData.append('post[title]', title)
 		formData.append('post[content]', content)
 		formData.append('post[viewer]', viewer)
@@ -64,7 +123,7 @@ const Upload = () => {
 		}
 			const res = postVideo()
 			if (res) {
-			  alert("Uploaded")
+			  alert("Successfully uploaded")
 				navigate({ pathname: '/' })
 			}
 	}
@@ -94,6 +153,7 @@ const Upload = () => {
 			<div className="app__mobile_form">
 				<Container className="bezel">
 					<div className="inner_bezel">
+
 			<Form onSubmit={handleSubmit}>
 				<Form.Group className="mb-3">
 					<Form.Label>Title</Form.Label>
@@ -146,7 +206,7 @@ const Upload = () => {
 				/>
 				</InputGroup>
 
-				<Form.Group className="mb-3">
+				{/* <Form.Group className="mb-3">
 					<Form.Label>Who can view this video</Form.Label>
 					<Form.Select aria-label="Default select example"
 						onChange={e => setViewer(e.target.value)}
@@ -164,7 +224,7 @@ const Upload = () => {
 						label={'Allow users to comment'}
 						onChange={e => setComment(e.target.value)}
 					/>
-				</Form.Group>
+				</Form.Group> */}
 
 				<Form.Group>
 					<Form.Control
@@ -172,7 +232,8 @@ const Upload = () => {
 						onChange={(e) => setVideoFile(e.target.files[0])}
 					/>
       	</Form.Group>
-
+				<div style={{height: "10vh"}}></div>
+				{errorDiv}
 				<Button
 					variant="info"
 					type="submit"
