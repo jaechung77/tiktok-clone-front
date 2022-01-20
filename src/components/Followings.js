@@ -1,35 +1,30 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { useEffect} from 'react';
 import '../App.css'
 import '../css/Video.css'
 import request from '../constants/Requests'
 import Video from './Video'
 import { useParams } from 'react-router-dom'
-import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMyposts } from '../redux/actions/postActions'
+import { fetchFollows } from '../redux/actions/postActions'
 
 
-const Manage = () => {
+const Followings = () => {
   const videos = useSelector((state) => state)
+  const { categoryID } = useParams()
   const dispatch = useDispatch()
-  const userID = sessionStorage.getItem('userID')
-
 
 	 useEffect(()=>{
-    dispatch(fetchMyposts(userID))
-    console.log("My Posts RENDERING >>>>>>>>>>>>>>>")
-	 }, [userID])
-	console.log("Videos:", videos)
-  console.log("DARA>>>>>>>>>>>FOOOO>>>:", videos.myPosts.myposts)
-  const renderVideos = videos.myPosts.myposts.map((video, i) =>{
+    dispatch(fetchFollows(categoryID))
+	 }, [categoryID])
+
+  const renderVideos = videos.allFollows.follows.map((video, i) =>{
     const {id, title, content, file, nick_name, viewer, user_id, status, likes } = video
     return(
       <Col sm={4}>
       <div className="app" key={id}>
         <div className="app__mobile">
-          {console.log("Each video URL:", `${request.API}${file.url}`)}
-          { video.file && 
+          { video.file &&
             <Video
               src={`${request.API}${file.url}`}
               videoID={id}
@@ -58,4 +53,4 @@ const Manage = () => {
   )
 }
 
-export default Manage
+export default Followings

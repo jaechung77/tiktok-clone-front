@@ -10,13 +10,12 @@ const Comment = () => {
 	const [clicked, setCllicked ] = useState(false)
 	const [ comments, setComments ] = useState([])
 	const { postID } = useParams()
-	
-	const userID = sessionStorage.getItem('userID')	
+
+	const userID = sessionStorage.getItem('userID')
 
 	useEffect(()=>{
 			async function fetchData() {
 				const resp = await axios.get(`${request.fetchVideo}/${postID}/comments`)
-				console.log("FETCH FROM Hashtags:", resp.data)
 				setComments(resp.data)
 				setCllicked(false)
 				return resp
@@ -33,9 +32,7 @@ const Comment = () => {
 	const handlePost = async () => {
 		async function fetchData() {
 			const resp = await axios.post(`${request.fetchVideo}/${postID}/comments`, data)
-			console.log("Post FROM Hashtags:", resp.data)
 			setCllicked(true)
-			console.log("Comment Post button clicked")
 			return resp
 		}
 		fetchData()
@@ -61,9 +58,9 @@ const Comment = () => {
 				</Form.Group>
 			</Form>
 			<Button 
-				col-12 variant="info" 
-				type="button" 
-				className="my-3 col-12" 
+				col-12 variant="info"
+				type="button"
+				className="my-3 col-12"
 				onClick={handlePost}
 			>
 				Post

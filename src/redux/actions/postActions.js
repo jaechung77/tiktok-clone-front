@@ -3,8 +3,8 @@ import request from '../../constants/Requests'
 import axios from 'axios';
 
 export const fetchPosts = () => async (dispatch) => {
-        const res = await axios.get(request.fetchVideos)
-        dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
+    const res = await axios.get(request.fetchVideos)
+    dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
 }
 
 export const fetchMyposts = (index) => async (dispatch) => {
@@ -15,10 +15,7 @@ export const fetchMyposts = (index) => async (dispatch) => {
 export const fetchSearchposts = (searchStr) => async (dispatch) => {
     const jsonData = {"nick_name": `${searchStr}`}
     const res = await axios.post(request.fetchMyposts+"/1/find", jsonData)
-    console.log("url: >>>>>>", request.fetchMyposts+"/1/find")
-    console.log("jSON: >>>>>>", jsonData)
     dispatch({type:ActionTypes.FETCH_SEARCHPOSTS, payload: res.data})
-    console.log("SEARCHED", res.data)
 }
 
 export const searchString = (str) => async (dispatch) => {
@@ -30,9 +27,7 @@ export const searchString = (str) => async (dispatch) => {
 }
 
 export const fetchPost = (index) => async (dispatch) => {
-    console.log("FETCHING VIDEO FROM>>>", request.fetchVideo+"/"+index)
     const res = await axios.get(request.fetchVideo+"/"+index)
-    console.log("FETCHING VIDEO FROM>>>", request.fetchVideo+"/"+index)
     dispatch({type:ActionTypes.FETCH_POST, payload: res.data})
 }
 
@@ -57,9 +52,7 @@ export const fetchFollows = (categoryID) => async (dispatch) => {
         actionName = "show_all"
     }
 
-    console.log("actionName >>>>>", actionName)
     const res = await axios.get(request.fetchFollows + "/" + sessionStorage.getItem("userID")+ "/" + actionName)
-    console.log("UUUUURRRRRRLLLLLL   ", request.fetchFollows + "/" + sessionStorage.getItem("userID")+ "/" + actionName)
     dispatch({type:ActionTypes.FETCH_FOLLOWS, payload: res.data})
 }
 

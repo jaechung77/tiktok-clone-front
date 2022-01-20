@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form, Container } from 'react-bootstrap';
-import { GoogleLogin } from 'react-google-login';
-import HorizontalLine from '../components/HorizontalLine';
 import axios from 'axios';
 import requests from '../constants/Requests'
 import { useCookies } from 'react-cookie'
-
 
 const SignUpModal = ({ show, onHide }) => {
 	const [signupSuccess, setSignupSuccess] = useState(null)
@@ -15,6 +12,7 @@ const SignUpModal = ({ show, onHide }) => {
 	const [passwordConfirmation, setPasswordConfirmation] = useState("")
 	const [error, setError] = useState(null)
 	const [cookies, setCookie] = useCookies(['accessToken'])
+
 	const data = {
 		nick_name: nickName,
 		email,
@@ -22,8 +20,8 @@ const SignUpModal = ({ show, onHide }) => {
 	}
 
 	const errorDiv = error ?
-		<Form.Label  
-			className="error" 
+		<Form.Label
+			className="error"
 			style={{color: 'red'}}
 		>
 			{error}
@@ -57,17 +55,11 @@ const SignUpModal = ({ show, onHide }) => {
 	const signupdataSetter = (resp) => {
 
 		const accessToken = resp.token
-		console.log("Login Data from 66", resp)
 		setCookie('accessToken', accessToken, { path: '/'})
 		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
 		sessionStorage.setItem('nickName', resp.user);
 		sessionStorage.setItem('userID', resp.id);
-		console.log("userName from 73", resp.id )
-		console.log("userName from 74", resp.user )
-		console.log("session>>>>>>", sessionStorage.getItem('nickName'))
-		
 	}
-
 
 	const handleSignUp = async () => {
 		if (!isValid()){
@@ -76,34 +68,24 @@ const SignUpModal = ({ show, onHide }) => {
 		}
 		postSignup()
 		.then(res => {
-			console.log("Returned    " , res)
-			// setSignupSuccess(true)
-			// console.log("Sign Up Success", signupSuccess)
-			// if(signupSuccess){
+			if (res) {
 				signupdataSetter(res)
-				console.log("In the if clause")
 				onHide()
 				window.location.reload()
-			// }	
+			}
 		})
-
 	}
 
 	const postSignup = async () => {
 		try {
 			const response =   await axios.post(requests.signup, data)
-
-				console.log("Sign up Sucess", signupSuccess)
-			console.log("Line 81", response.data)
 			return response.data
 		}
 		catch(err) {
-			console.log(err)
 			setSignupSuccess(false)
 			setError(err)
 		}
 	}
-
 
 	return (
 		<Modal
@@ -149,24 +131,22 @@ const SignUpModal = ({ show, onHide }) => {
 
 						<Form.Group className="mb-3">
 							<Form.Label>Confirm Password</Form.Label>
-							<Form.Control 
-								type="password" 
-								placeholder="Confirm password" 
+							<Form.Control
+								type="password"
+								placeholder="Confirm password"
 								onChange={e => setPasswordConfirmation(e.target.value)}	
 							/>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
-				<Button 
-					col-12 variant="info" 
-					type="button" 
-					className="my-3 col-12" 
+				<Button
+					col-12 variant="info"
+					type="button"
+					className="my-3 col-12"
 					onClick={handleSignUp}
 				>
 					Sign Up
 				</Button>
-
-
 			</Container>
 		</Modal>
 	)

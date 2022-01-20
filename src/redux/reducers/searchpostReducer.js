@@ -7,7 +7,7 @@ export const searchpostReducer = ( state= initialState, { type, payload }) => {
     switch (type){
 
         case ActionTypes.FETCH_SEARCHPOSTS:
-                return {...state, searchposts:payload}        
+                return {...state, searchposts:payload}
         default:
             return state
     }

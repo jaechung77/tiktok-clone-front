@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Button, Form, InputGroup } from 'react-bootstrap';
-import request from '../constants/Requests'
+import { Container, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import '../App.css'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
@@ -17,12 +16,11 @@ const Profile = () => {
 
 	const userID = sessionStorage.getItem('userID')
 	const navigate = useNavigate()
-
 	const nickName = sessionStorage.getItem('nickName')
 
 	const errorDiv = error ?
-		<Form.Label  
-			className="error" 
+		<Form.Label
+			className="error"
 			style={{color: 'red'}}
 		>
 			{error}
@@ -39,13 +37,10 @@ const Profile = () => {
 	const postPasswordChange = async () => {
 		try {
 			const response =   await axios.post(requests.postPasswordChange, data)
-			console.log("Line 81", response.data)
 			setUpdateSuccess(true)
-			console.log("updateSuccess", updateSuccess)
 			return response.data
 		}
 		catch(err) {
-			// console.log(err.response.data.error)
 			setError(err.response.data.error)
 			setUpdateSuccess(false)
 		}
@@ -80,14 +75,14 @@ const Profile = () => {
 		if (!isValid()){
 			setUpdateSuccess(false)
 			return null
-		}	
+		}
 		postPasswordChange()
 		.then(res => {
 			if (res){
 				navigate({ pathname:'/'})
 			}
 		})
-	}	
+	}
 
 	return (
 		<div className="app">
@@ -97,58 +92,57 @@ const Profile = () => {
 						<div style={{color: "blue", textAlign:"center"}}>
 							CHANGE YOUR PASSWORD
 						</div>
-			<Form onSubmit={handleSubmit}>
-				<Form.Group className="mb-3">
-					<Form.Label>Nick Name</Form.Label>
-					<Form.Control
-						type="text"
-						value={nickName}
-					/>
-				</Form.Group>
+						<Form onSubmit={handleSubmit}>
+							<Form.Group className="mb-3">
+								<Form.Label>Nick Name</Form.Label>
+								<Form.Control
+									type="text"
+									value={nickName}
+								/>
+							</Form.Group>
 
-				<Form.Group className="mb-3">
-					<Form.Label>Old Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Type Current Password"
-						onChange={e => setOldPassword(e.target.value)}
-					/>
-				</Form.Group>
+							<Form.Group className="mb-3">
+								<Form.Label>Old Password</Form.Label>
+								<Form.Control
+									type="password"
+									placeholder="Type Current Password"
+									onChange={e => setOldPassword(e.target.value)}
+								/>
+							</Form.Group>
 
-				<Form.Group className="mb-3">
-					<Form.Label>New Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Type New Password"
-						onChange={e => setNewPassword(e.target.value)}
-					/>
-				</Form.Group>
+							<Form.Group className="mb-3">
+								<Form.Label>New Password</Form.Label>
+								<Form.Control
+									type="password"
+									placeholder="Type New Password"
+									onChange={e => setNewPassword(e.target.value)}
+								/>
+							</Form.Group>
 
-				<Form.Group className="mb-3">
-					<Form.Label>Confirm New Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Confirm New Password"
-						onChange={e => setNewPasswordConfirm(e.target.value)}
-					/>
-				</Form.Group>
+							<Form.Group className="mb-3">
+								<Form.Label>Confirm New Password</Form.Label>
+								<Form.Control
+									type="password"
+									placeholder="Confirm New Password"
+									onChange={e => setNewPasswordConfirm(e.target.value)}
+								/>
+							</Form.Group>
 
+							<div style={{height: "10vh"}}>{errorDiv}</div>
 
-				<div style={{height: "10vh"}}>{errorDiv}</div>
-			
-				<Button
-					variant="info"
-					type="submit"
-					className="my-3 col-12"
-				>
-					Post
-				</Button>
-			</Form>
-			</div>
-			<div style={{textAlign: 'center'}}>
-				<CircleOutlinedIcon style={{fontSize: '60px', paddingTop: "7px"}}/>
-			</div>
-			</Container>
+							<Button
+								variant="info"
+								type="submit"
+								className="my-3 col-12"
+							>
+								Post
+							</Button>
+						</Form>
+					</div>
+					<div style={{textAlign: 'center'}}>
+						<CircleOutlinedIcon style={{fontSize: '60px', paddingTop: "7px"}}/>
+					</div>
+				</Container>
 			</div>
 		</div>
 	)

@@ -8,12 +8,10 @@ const Hashtag = () => {
 	const [ hashtags, setHashtags ] = useState([])
 	const { postID } = useParams()
 	const nickName = sessionStorage.getItem('nickName')
-	const likes = 30
 
 	useEffect(()=>{
 			async function fetchData() {
 				const resp = await axios.get(`${request.fetchHashtags}/${postID}/hashtags`)
-				console.log("FETCH FROM Hashtags:", resp.data)
 				setHashtags(resp.data)
 				return resp
 		}
@@ -23,16 +21,15 @@ const Hashtag = () => {
 	const renderHashtag = 	hashtags && hashtags.map((hashtag) =>{
 		return <div key={hashtag.id}>#{hashtag.tag}<br/></div>
 	})
-	
+
 	return (
 		<Card border="light" style={{ width: '18rem', height: '18rem' }}>
 			<Card.Header>{nickName}</Card.Header>
-			{ hashtags && 
+			{ hashtags &&
 				<Card.Text>
 					{renderHashtag}
 				</Card.Text>
 			}
-			<Card.Footer><i className="fas fa-heart"></i> {likes} &nbsp; <i className="fas fa-comment"></i></Card.Footer>
 		</Card>
 	)
 }

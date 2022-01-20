@@ -1,10 +1,9 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState } from 'react';
 import '../css/Video.css';
 import VideoFooter from './VideoFooter'
 import VideoSidebar from './VideoSidebar'
 import { useLocation  } from 'react-router-dom'
 import VideoDeletebar from './VideoDeletebar'
-
 
 const Video = ({src, index, key, title, nickName, videoID, shares, posterID, status, likes}) => {
 	const [playing, setPlaying] = useState(false)
@@ -20,24 +19,17 @@ const Video = ({src, index, key, title, nickName, videoID, shares, posterID, sta
 		}	else {
 			videoRef.current.pause()
 			setPlaying(true)
-		} 
+		}
 	}
-	// console.log("Video:", videoID)
-	// console.log("nickName from video>>>", nickName)
-	// console.log("User ID>>>:", userID)
-	// console.log("Params", location.pathname)
+
 	if (location.pathname.includes('manage')) {
 		deleteMode = true
 	}
-	// useEffect(()=>{
-
-	// }, [userID])
-
 
 	return (
 		<div className="video">
 			<video
-				className="video__player" 
+				className="video__player"
 				src={src}
 				ref={videoRef}
 				loop
@@ -53,7 +45,9 @@ const Video = ({src, index, key, title, nickName, videoID, shares, posterID, sta
 				<>
 					{ userID  && userID !== "" && !deleteMode
 					?
-					<><VideoSidebar  shares={shares} key={key} index={index} videoID={videoID} posterID={posterID} status={status} likes={likes} nickName= {nickName} src={src}/></>
+					<><VideoSidebar  shares={shares} key={key} index={index} videoID={videoID}
+					posterID={posterID} status={status} likes={likes} nickName= {nickName} src={src}/>
+					</>
 					:
 					<></>
 					}

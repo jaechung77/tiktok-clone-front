@@ -14,7 +14,7 @@ export const followReducer = ( state= initialState, { type, payload }) => {
     }
 }
 
-// Jae : reference for future use 
+// Jae : reference for future use
 // case ActionTypes.INCREMENT_LIKES:
 //     const incList = state.posts.map((post) => {
 //         if (post.id === payload.id)
@@ -33,5 +33,5 @@ export const followReducer = ( state= initialState, { type, payload }) => {
 //             ...state,
 //                     //likes: state.likes - 1
 //                     // posts:payload
-                  
+//
 //             }

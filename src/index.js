@@ -7,8 +7,6 @@ import App from './App';
 import store from './redux/store';
 import { CookiesProvider } from 'react-cookie'
 
-
-
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>

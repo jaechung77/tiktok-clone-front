@@ -18,8 +18,8 @@ import PeopleIcon from '@mui/icons-material/People';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Avatar from '@mui/material/Avatar';
 import { Tooltip } from '@mui/material';
-import SignUpModal from '../modals/SignUpModal';
-import SignInModal from '../modals/SignInModal';
+import SignUpModal from '../auth/SignUpModal';
+import SignInModal from '../auth/SignInModal';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie'
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
@@ -70,9 +70,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-
 export default function Header() {
-  
+
 	const loginSuccess = sessionStorage.getItem('nickName')
 	const [signUpModalOn, setSignUpModalOn] = useState(false)
 	const [signInModalOn, setSignInModalOn] = useState(false)
@@ -103,7 +102,7 @@ export default function Header() {
 
   const handleProfile = () => {
     handleMenuClose()
-    navigate({ pathname: '/profile' })    
+    navigate({ pathname: '/profile' })
   };
 
   const handlePosts= () => {
@@ -127,7 +126,7 @@ export default function Header() {
     alert("Successfully Logged Out")
     navigate({ pathname: '/' })
   }
-  
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -153,7 +152,6 @@ export default function Header() {
   );
 
   const handleClick = () => {
-    console.log(search)
     dispatch(searchString(search))
     navigate({ pathname:'search'})
   }
@@ -209,7 +207,7 @@ export default function Header() {
       </MenuItem>
     </Menu>
   );
-console.log(">>>>>>>>>>>", loginSuccess)
+
   return (
     <>
     <SignUpModal show={signUpModalOn} onHide={()=>setSignUpModalOn(false)} />
@@ -238,15 +236,11 @@ console.log(">>>>>>>>>>>", loginSuccess)
             color="gray"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            
-           
           </Typography>
 
-          { sessionStorage.getItem("userID") &&   
-          <>   
+          { sessionStorage.getItem("userID") &&
+          <>
           <Search style={{color: '#0066CC'}}>
-
-
             <StyledInputBase style={{border: "1px solid blue"}}
               placeholder="Search by nickname"
               inputProps={{ 'aria-label': 'search' }}
@@ -261,8 +255,8 @@ console.log(">>>>>>>>>>>", loginSuccess)
           }
           <Box  sx={{ flexGrow: 1 }} />
           <Box  sx={{ display: { xs: 'none', md: 'flex' } }}>
-          { sessionStorage.getItem("userID") &&   
-          <>    
+          { sessionStorage.getItem("userID") &&
+          <>
           <MaterialLink component={RouterLink} to='followings/1' >
             <Tooltip title="Follow">
               <IconButton size="large" color="inherit">
@@ -279,7 +273,7 @@ console.log(">>>>>>>>>>>", loginSuccess)
                   <PersonRemoveIcon />
                 </Badge>
               </IconButton>
-            </Tooltip>              
+            </Tooltip>
           </MaterialLink>
           <MaterialLink component={RouterLink} to='followings/3'>
             <Tooltip title="Accept Requesting">
@@ -288,7 +282,7 @@ console.log(">>>>>>>>>>>", loginSuccess)
                   <PersonAddAlt1Icon />
                 </Badge>
               </IconButton>
-            </Tooltip> 
+            </Tooltip>
           </MaterialLink>
           <MaterialLink component={RouterLink} to='followings/4'>
             <Tooltip title="Friends">
@@ -297,7 +291,7 @@ console.log(">>>>>>>>>>>", loginSuccess)
                   <PeopleIcon />
                 </Badge>
               </IconButton>
-            </Tooltip> 
+            </Tooltip>
           </MaterialLink>
 
           <MaterialLink component={RouterLink} to='upload'>
@@ -310,14 +304,14 @@ console.log(">>>>>>>>>>>", loginSuccess)
                   <FileUploadIcon />
                 </Badge>
               </IconButton>
-            </Tooltip>   
+            </Tooltip>
           </MaterialLink>
           </>
         }
           { loginSuccess && loginSuccess !== ""
-								? 
-            <> 
-              <Tooltip title="Settings & Log Out ...">    
+								?
+            <>
+              <Tooltip title="Settings & Log Out ...">
                 <IconButton
                   size="large"
                   edge="end"
@@ -333,7 +327,7 @@ console.log(">>>>>>>>>>>", loginSuccess)
             </>
 								:
 								<>
-                  <Tooltip title="Log In"> 
+                  <Tooltip title="Log In">
                     <IconButton
                       size="large"
                       edge="end"
@@ -345,7 +339,7 @@ console.log(">>>>>>>>>>>", loginSuccess)
                     >
                       <AccountCircle />
                     </IconButton>
-                  </Tooltip>  
+                  </Tooltip>
                 </>
           }
 

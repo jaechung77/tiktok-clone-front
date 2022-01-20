@@ -1,22 +1,21 @@
 import React from 'react'
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const handleFollow = () => {
-
-
+	
 }
 
 const Follow = () => {
   return (
     <div>
-			<Button 
-				col-12 variant="danger" 
-				type="button" 
-				className="my-3 col-12" 
+			<Button
+				col-12 variant="danger"
+				type="button"
+				className="my-3 col-12"
 				onClick={handleFollow}
 			>
 				Follow
-			</Button>      
+			</Button>
     </div>
   )
 }
