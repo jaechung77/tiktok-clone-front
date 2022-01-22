@@ -63,9 +63,11 @@ const handleSignIn =  () => {
 		}
 		fetchLogin()
 		.then(res =>{
-			logindataSetter(res)
-			onHide()
-			window.location.reload()
+			if(res){
+				logindataSetter(res)
+				onHide()
+				window.location.reload()
+			}
 		})
 }
 

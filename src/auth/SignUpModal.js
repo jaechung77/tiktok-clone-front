@@ -59,6 +59,7 @@ const SignUpModal = ({ show, onHide }) => {
 		axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
 		sessionStorage.setItem('nickName', resp.user);
 		sessionStorage.setItem('userID', resp.id);
+		console.log("User ID Settter", resp.id)
 	}
 
 	const handleSignUp = async () => {

@@ -3,11 +3,13 @@ import request from '../../constants/Requests'
 import axios from 'axios';
 
 export const fetchPosts = () => async (dispatch) => {
+    console.log("In the action")
     const res = await axios.get(request.fetchVideos)
     dispatch({type:ActionTypes.FETCH_POSTS, payload: res.data})
 }
 
 export const fetchMyposts = (index) => async (dispatch) => {
+    console.log("In the action")
     const res = await axios.get(request.fetchMyposts+"/"+index+"/mypost")
     dispatch({type:ActionTypes.FETCH_MYPOSTS, payload: res.data})
 }
