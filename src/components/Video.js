@@ -30,12 +30,14 @@ const Video = ({src, index, key, title, nickName, videoID, shares, posterID, sta
 		<div className="video">
 			<video
 				className="video__player"
+				// https://tt-clone-rails-v4.s3.amazonaws.com/uploads/post/file/16/1.mp4
 				src={src}
 				ref={videoRef}
 				loop
 				onClick={onVideoPress}
 				key = {key}
 			></video>
+			
 			<VideoFooter title={title} nickName= {nickName}/>
 			{ deleteMode &&
 			<>

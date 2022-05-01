@@ -26,7 +26,7 @@ const Followings = () => {
         <div className="app__mobile">
           { video.file &&
             <Video
-              src={`${request.API}${file.url}`}
+              src={file.url}
               videoID={id}
               title={title}
               content={content}

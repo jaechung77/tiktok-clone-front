@@ -42,7 +42,7 @@ const Show = () => {
 								{ video.file &&
 									<video
 										className="video__player"
-										src={`${request.API}${video.file.url}`}
+										src={video.file.url}
 										ref={videoRef}
 										loop
 										onClick={onVideoPress}
