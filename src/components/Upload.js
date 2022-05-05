@@ -60,10 +60,10 @@ const Upload = () => {
 			setError("You must upload video file")
 			return false
 		}
-		if (!isVideo(videoFile)) {
-			setError("The file format is not supported")
-			return false
-		}
+		// if (!isVideo(videoFile)) {
+		// 	setError("The file format is not supported")
+		// 	return false
+		// }
 		console.log(videoFile)
 		return true
 	}
