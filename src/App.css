@@ -12,7 +12,7 @@ html {
 }
 .app__mobile {
 	position: relative;
-	height: 550px;
+	height: 500px;
 	border: solid 5px silver;
 	/* height: 800px; */
 	overflow: scroll;
@@ -34,7 +34,7 @@ html {
 
 .app__mobile_form {
 	position: relative;
-	height: 730px;
+	height: 700px;
 	border: solid 5px silver;
 	/* height: 800px; */
 	overflow: scroll;
