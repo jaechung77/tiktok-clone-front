@@ -14,7 +14,10 @@ function App() {
   const [cookies] = useCookies(['accessToken'])
   axios.defaults.headers.common = {
     'Authorization': 'Bearer ' + cookies.accessToken,
-    'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE'
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
   };
 
   return (
