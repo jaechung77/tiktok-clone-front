@@ -13,7 +13,8 @@ import { useCookies } from 'react-cookie'
 function App() {
   const [cookies] = useCookies(['accessToken'])
   axios.defaults.headers.common = {
-    'Authorization': 'Bearer ' + cookies.accessToken
+    'Authorization': 'Bearer ' + cookies.accessToken,
+    'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE'
   };
 
   return (
