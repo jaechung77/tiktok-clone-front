@@ -56,7 +56,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://quiet-plains-45335.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -74,5 +73,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://quiet-plains-45335.herokuapp.com"
 }
