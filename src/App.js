@@ -17,7 +17,7 @@ function App() {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Acess-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length'
+    'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Acess-Control-Allow-Methods, Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length, Access-Control-Request-Headers'
   };
 
   return (
