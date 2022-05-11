@@ -16,7 +16,7 @@ function App() {
     'Authorization': 'Bearer ' + cookies.accessToken,
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'https://astounding-brioche-ccbf0b.netlify.app',
-    'Acess-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Acess-Control-Allow-Methods, Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length, Access-Control-Request-Headers',
     'Access-Control-Allow-Credentials': true,
     'crossorigin': true
